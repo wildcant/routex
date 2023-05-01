@@ -11,6 +11,7 @@
     "db:push": {},
     "db:seed": {},
     "dev": {
+      "dependsOn": ["^generate"],
       "cache": false,
       "persistent": true
     },

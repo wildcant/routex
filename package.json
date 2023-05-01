@@ -12,10 +12,12 @@
     "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "generate": "turbo run generate",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "clean": "find . -name node_modules -o -name .svelte-kit -o -name .turbo -o -name dist -type d -prune | xargs rm -rf && find . -name tsconfig.tsbuildinfo | xargs rm -f"
   },
   "devDependencies": {
-    "prettier": "^2.5.1",
+    "prettier": "^2.7.1",
+    "prettier-plugin-svelte": "^2.7.0",
     "tsx": "^3.7.1",
     "turbo": "latest"
   },

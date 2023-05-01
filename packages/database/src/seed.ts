@@ -1,14 +1,14 @@
-import { prisma } from ".";
+import { prisma } from '.';
 
-import type { User } from "@prisma/client";
+import type { User } from '@prisma/client';
 
 const DEFAULT_USERS = [
   // Add your own user to pre-populate the database with
   {
-    name: "Tim Apple",
-    email: "tim@apple.com",
-  },
-] as Array<Partial<User>>;
+    name: 'Tim Apple',
+    email: 'tim@apple.com'
+  }
+] as Array<User>;
 
 (async () => {
   try {
@@ -16,14 +16,14 @@ const DEFAULT_USERS = [
       DEFAULT_USERS.map((user) =>
         prisma.user.upsert({
           where: {
-            email: user.email!,
+            email: user.email!
           },
           update: {
-            ...user,
+            ...user
           },
           create: {
-            ...user,
-          },
+            ...user
+          }
         })
       )
     );

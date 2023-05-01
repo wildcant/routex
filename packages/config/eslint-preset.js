@@ -1,16 +1,31 @@
 module.exports = {
-  extends: ["next", "turbo", "prettier"],
-  settings: {
-    next: {
-      rootDir: ["apps/*/", "packages/*/"],
-    },
-  },
-  rules: {
-    "@next/next/no-html-link-for-pages": "off",
-  },
+  root: true,
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:svelte/recommended',
+    'prettier',
+  ],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
+  ignorePatterns: ['*.cjs'],
   parserOptions: {
-    babelOptions: {
-      presets: [require.resolve("next/babel")],
-    },
+    sourceType: 'module',
+    ecmaVersion: 2020,
+    extraFileExtensions: ['.svelte'],
   },
-};
+  env: {
+    browser: true,
+    es2017: true,
+    node: true,
+  },
+  overrides: [
+    {
+      files: ['*.svelte'],
+      parser: 'svelte-eslint-parser',
+      parserOptions: {
+        parser: '@typescript-eslint/parser',
+      },
+    },
+  ],
+}

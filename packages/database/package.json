@@ -10,7 +10,6 @@
   ],
   "scripts": {
     "build": "tsup",
-    "clean": "rimraf .turbo node_modules dist",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:migrate:dev": "prisma migrate dev",
     "db:push": "prisma db push",
@@ -24,12 +23,13 @@
     "studio": "prisma studio"
   },
   "dependencies": {
-    "@prisma/client": "^3.10.0"
+    "@prisma/client": "^4.13.0"
   },
   "devDependencies": {
+    "@types/node": "^17.0.12",
     "config": "workspace:*",
     "eslint": "^8.12.0",
-    "prisma": "^3.10.0",
+    "prisma": "^4.13.0",
     "rimraf": "^3.0.2",
     "tsconfig": "workspace:*",
     "tsup": "^5.11.13",
