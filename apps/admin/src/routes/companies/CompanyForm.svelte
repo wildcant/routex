@@ -7,7 +7,7 @@
 	export let data: Validation<CompanySchema>;
 
 	export let submitLabel: string;
-	const { form, errors, enhance, allErrors } = superForm(data, {
+	const { form, errors, enhance, allErrors, submitting } = superForm(data, {
 		validators: companySchema
 	});
 
@@ -43,5 +43,5 @@
 	/>
 	{#if $errors.name}<small class="text-red">{$errors.name}</small>{/if}
 
-	<button type="submit">{submitLabel}</button>
+	<button type="submit" aria-busy={$submitting} disabled={$submitting}>{submitLabel}</button>
 </form>

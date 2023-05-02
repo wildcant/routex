@@ -1,6 +1,9 @@
 <script lang="ts">
 	import '../app.css';
+	import { Toaster } from 'svelte-french-toast';
+	import Modal from '../component/Modal.svelte';
 	import { globalErrorMessage } from '../stores';
+
 	let error: string | undefined = undefined;
 	const closeAlert = () => globalErrorMessage.set(undefined);
 	globalErrorMessage.subscribe((msg) => {
@@ -55,6 +58,12 @@
 		</div>
 	</div>
 </main>
+
+<Modal />
+<Toaster
+	position="bottom-center"
+	toastOptions={{ style: 'border-radius: 200px; background: #333; color: #fff;' }}
+/>
 
 <style>
 	div.container {

@@ -6,7 +6,7 @@
 	export let data: PageData;
 </script>
 
-<CompanyNavigation currentPage="Update" />
+<CompanyNavigation currentPage="Edit" />
 
 <article>
 	<header>
