@@ -1,16 +1,17 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import CompanyForm from '../CompanyForm.svelte';
-	import CompanyFormHeader from '../CompanyFormHeader.svelte';
 	import CompanyNavigation from '../CompanyNavigation.svelte';
-	import type { ActionData } from './$types';
+	import type { PageData } from './$types';
 
-	export let form: ActionData;
+	export let data: PageData;
 </script>
 
 <CompanyNavigation currentPage="New" />
 
 <article>
-	<CompanyFormHeader title="New Company" errorMessage={form?.errorMessage} error={form?.error} />
-	<CompanyForm formState={{ errors: form?.errors }} submitLabel="Create" />
+	<header>
+		<h1>New Company</h1>
+	</header>
+
+	<CompanyForm data={data.form} submitLabel="Create" />
 </article>
