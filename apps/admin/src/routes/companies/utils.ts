@@ -1,4 +1,4 @@
-import { Prisma, prisma } from 'database';
+import { Prisma } from '$lib/prisma';
 import type { Validation } from 'sveltekit-superforms';
 import { setError } from 'sveltekit-superforms/server';
 import type { CompanySchema } from './schema';
@@ -11,10 +11,6 @@ type HandleSaveCompanyErrorArgs = {
 	form: Validation<CompanySchema>;
 };
 export const handleSaveCompanyError = async ({ error, form }: HandleSaveCompanyErrorArgs) => {
-	if (await prisma.company.findUnique({ where: { name: form.data.name } })) {
-		return setError(form, 'name', 'A company with this name already exist.');
-	}
-
 	if (error instanceof Prisma.PrismaClientKnownRequestError) {
 		return setError(form, null, error.message);
 	}

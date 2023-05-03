@@ -5,25 +5,25 @@
 	import toast from 'svelte-french-toast';
 
 	export let data: PageData;
-	const openConfirmDeleteCompanyModal = (companyId: number) =>
+	const openConfirmDeleteUserModal = (userId: number) =>
 		openModal({
-			content: 'Are you sure you want to delete this company?',
+			content: 'Are you sure you want to delete this user?',
 			primaryButtonProps: {
 				onClick: () => {
 					setModalIsLoading.on();
-					fetch(`/api/companies/${companyId}`, { method: 'DELETE' })
+					fetch(`/api/users/${userId}`, { method: 'DELETE' })
 						.then((r) => r.json())
 						.then((data: { success?: boolean; message?: string }) => {
 							if (!data.success) {
-								toast.error(data.message ?? 'There was a problem trying to delete this company.');
+								toast.error(data.message ?? 'There was a problem trying to delete this user.');
 								return;
 							}
-							toast.success('The company was deleted successfully.');
+							toast.success('The user was deleted successfully.');
 							invalidateAll();
 							closeModal();
 						})
 						.catch((error) => {
-							let errorMessage = `There was a problem trying to delete this company.`;
+							let errorMessage = `There was a problem trying to delete this user.`;
 							if (error instanceof Error) {
 								errorMessage.concat(error.message);
 							}
@@ -39,7 +39,7 @@
 <nav aria-label="breadcrumb">
 	<ul>
 		<li><a href="/">Home</a></li>
-		<li>Companies</li>
+		<li>Users</li>
 	</ul>
 </nav>
 
@@ -47,8 +47,8 @@
 
 <header>
 	<div class="row middle-xs between-xs">
-		<h1>Companies</h1>
-		<a href="/companies/new" role="button">New</a>
+		<h1>Users</h1>
+		<a href="/users/new" role="button">New</a>
 	</div>
 </header>
 
@@ -58,18 +58,18 @@
 	<thead>
 		<tr>
 			<th scope="col">Name</th>
-			<th scope="col">Hash</th>
+			<th scope="col">Email</th>
 			<th scope="col">Actions</th>
 		</tr>
 	</thead>
 	<tbody>
-		{#each data.companies as company (company.id)}
+		{#each data.users as user (user.id)}
 			<tr>
-				<td>{company.name}</td>
-				<td>{company.hash}</td>
+				<td>{user.name}</td>
+				<td>{user.email}</td>
 				<td>
 					<div class="row end-xs" style="gap: 6px;">
-						<a class="icon-button text-yellow" href={`/companies/${company.id}`}>
+						<a class="icon-button text-yellow" href={`/users/${user.id}`}>
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 								<path
 									fill="currentColor"
@@ -79,7 +79,7 @@
 						</a>
 						<button
 							class="icon-button text-red-700"
-							on:click={() => openConfirmDeleteCompanyModal(company.id)}
+							on:click={() => openConfirmDeleteUserModal(user.id)}
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 								<path

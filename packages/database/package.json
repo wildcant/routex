@@ -2,11 +2,31 @@
   "name": "database",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/types.d.ts",
+  "main": "./dist/types.js",
+  "exports": {
+    ".": {
+      "require": "./dist/types.js",
+      "import": "./dist/types.mjs",
+      "default": "./dist/types.js",
+      "types": "./dist/types.d.ts"
+    },
+    "./*": {
+      "require": "./dist/*/index.js",
+      "import": "./dist/*/index.mjs",
+      "types": "./dist/*/index.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*/index.d.ts",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
   "files": [
-    "dist/**"
+    "dist"
   ],
   "scripts": {
     "build": "tsup",

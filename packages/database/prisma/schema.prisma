@@ -9,10 +9,16 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  name  String
+  role  Role   @default(USER)
 }
 
 model Company {
