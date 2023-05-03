@@ -78,9 +78,13 @@
         </div>
       </div>
 
-      <div>
+      <div class="flex justify-center">
         <button type="submit" class="btn variant-filled" disabled={$submitting}>Register</button>
       </div>
     </form>
+    <div class="flex justify-center gap-2 mt-4">
+      Already have an account?
+      <a href="/login">Login</a>
+    </div>
   </div>
 </div>

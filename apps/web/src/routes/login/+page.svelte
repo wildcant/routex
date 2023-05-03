@@ -65,9 +65,13 @@
         {#if $errors.password}<small class="text-red-400">{$errors.password}</small>{/if}
       </div>
 
-      <div>
+      <div class="flex justify-center">
         <button type="submit" class="btn variant-filled" disabled={$submitting}>Login</button>
       </div>
     </form>
+    <div class="flex justify-center gap-2 mt-4">
+      Don't have an account?
+      <a href="/register">Register</a>
+    </div>
   </div>
 </div>
