@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { prisma } from '.';
 
 import type { User } from '@prisma/client';
@@ -6,7 +7,8 @@ const DEFAULT_USERS = [
   // Add your own user to pre-populate the database with
   {
     name: 'Tim Apple',
-    email: 'tim@apple.com'
+    email: 'tim@apple.com',
+    password: bcrypt.hashSync('12345', 10)
   }
 ] as Array<User>;
 

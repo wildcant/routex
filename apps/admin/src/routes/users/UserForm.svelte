@@ -3,7 +3,7 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	import { userSchema, type UserSchema } from './schema';
 	import { globalErrorMessage } from '../../stores';
-	import { Role } from 'database/client';
+	import { Role, Status } from 'database/client';
 
 	export let data: Validation<UserSchema>;
 
@@ -34,6 +34,30 @@
 {/if}
 
 <form method="post" use:enhance>
+	<fieldset>
+		<legend>Status</legend>
+		<label for={Status.ACTIVE}>
+			<input
+				type="radio"
+				id={Status.ACTIVE}
+				name="status"
+				bind:group={$form.status}
+				value={Status.ACTIVE}
+			/>
+			Active
+		</label>
+		<label for={Status.PENDING}>
+			<input
+				type="radio"
+				id={Status.PENDING}
+				name="status"
+				bind:group={$form.status}
+				value={Status.PENDING}
+			/>
+			Pending
+		</label>
+	</fieldset>
+
 	<label for="name" aria-required="true">Name</label>
 	<input
 		type="text"
@@ -65,5 +89,16 @@
 			Admin
 		</label>
 	</fieldset>
+
+	<label for="password" aria-required="true">Password</label>
+	<input
+		type="password"
+		id="password"
+		name="password"
+		aria-invalid={$errors?.password ? 'true' : null}
+		bind:value={$form.password}
+	/>
+	{#if $errors.password}<small class="text-red">{$errors.password}</small>{/if}
+
 	<button type="submit" aria-busy={$submitting} disabled={$submitting}>{submitLabel}</button>
 </form>

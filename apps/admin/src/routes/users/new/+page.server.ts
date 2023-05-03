@@ -1,6 +1,8 @@
 import { prisma } from '$lib/prisma';
 import { fail, redirect } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms/server';
+import bcrypt from 'bcrypt';
+import omit from 'lodash/omit';
+import { setError, superValidate } from 'sveltekit-superforms/server';
 import { userSchema } from '../schema';
 import { handleSaveUserError } from '../utils';
 import type { Actions, PageServerLoad } from './$types';
@@ -14,8 +16,11 @@ export const actions: Actions = {
 	default: async ({ request }) => {
 		const form = await superValidate(request, userSchema);
 		if (!form.valid) return fail(400, { form });
+
 		try {
-			await prisma.user.create({ data: form.data });
+			const data = omit(form.data, ['password']);
+			const password = bcrypt.hashSync(form.data.password, 10);
+			await prisma.user.create({ data: { ...data, password } });
 		} catch (error) {
 			return handleSaveUserError({ error, form });
 		}

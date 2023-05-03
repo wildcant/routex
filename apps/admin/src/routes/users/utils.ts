@@ -7,6 +7,8 @@ type HandleSaveUserErrorArgs = {
 	error: unknown;
 	form: Validation<UserSchema>;
 };
+
+/** Customize db errors messages to improve ux. */
 export const handleSaveUserError = async ({ error, form }: HandleSaveUserErrorArgs) => {
 	if (await prisma.user.findUnique({ where: { email: form.data.email } })) {
 		return setError(form, 'email', 'A user with this email already exist.');
