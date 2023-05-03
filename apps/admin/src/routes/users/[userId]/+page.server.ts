@@ -5,7 +5,7 @@ import { userSchema } from '../schema';
 import { handleSaveUserError } from '../utils';
 import type { Actions, PageServerLoad } from './$types';
 import bcrypt from 'bcrypt';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const user = await prisma.user.findUnique({ where: { id: parseInt(params.userId) } });
