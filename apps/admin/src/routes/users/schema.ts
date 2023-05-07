@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 import { Role, Status } from 'database/client';
 
 export const userSchema = z.object({

@@ -32,7 +32,7 @@
         .marker([11.231896988705872, -74.21151995658876], { icon: poleIcon, draggable: true })
         .addTo(map);
 
-      marker.on('dragend', (e) => {
+      marker.on('dragend', () => {
         const position = marker.getLatLng();
         marker.setLatLng(new leaflet.LatLng(position.lat, position.lng));
         marker.bindPopup(`<pre>${JSON.stringify(position, null, 2)}</pre>`).openPopup();

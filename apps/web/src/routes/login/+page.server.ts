@@ -1,6 +1,6 @@
 import { NODE_ENV } from '$env/static/private';
 import { JWT_COOKIE_KEY, generateUserToken } from '$lib/server/auth';
-import { prisma } from '$lib/prisma';
+import { prisma } from '$lib/server/prisma';
 import { fail, redirect } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
 import pick from 'lodash/pick';

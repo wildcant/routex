@@ -1,12 +1,11 @@
 import { NODE_ENV } from '$env/static/private';
-import { prisma } from '$lib/prisma';
+import { prisma } from '$lib/server/prisma';
 import { fail, redirect } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
 import omit from 'lodash/omit';
 import { setError, superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
 import { registerSchema } from './schema';
-import { Prisma } from 'database/server';
 
 export const load: PageServerLoad = async () => {
   const form = await superValidate(registerSchema);
@@ -14,7 +13,7 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-  default: async ({ request, url, cookies }) => {
+  default: async ({ request, url }) => {
     // Check form is valid.
     const form = await superValidate(request, registerSchema);
     if (!form.valid) return fail(400, { form });

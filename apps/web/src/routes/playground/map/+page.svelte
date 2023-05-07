@@ -1,11 +1,9 @@
 <script lang="ts">
   import { browser } from '$app/environment';
-  import type { LatLngTuple } from 'leaflet';
-  import type { Map, Control } from 'leaflet';
+  import type { Map } from 'leaflet';
 
   import { onDestroy, onMount } from 'svelte';
 
-  let mapElement: HTMLDivElement;
   let map: Map;
 
   onMount(async () => {
@@ -66,7 +64,7 @@
         var layer = event.layer;
 
         console.log({ event });
-        console.log(event.layerType);
+        // console.log(event.layerType);
 
         drawnItems.addLayer(layer);
       });
@@ -81,7 +79,7 @@
   });
 </script>
 
-<div id="map" bind:this={mapElement} />
+<div id="map" />
 
 <style>
   @import 'leaflet/dist/leaflet.css';

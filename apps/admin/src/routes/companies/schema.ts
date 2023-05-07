@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 
 export const companySchema = z.object({
 	name: z.string().min(1, { message: 'This field is required.' })

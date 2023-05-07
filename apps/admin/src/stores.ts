@@ -17,6 +17,7 @@ const defaultModal: ModalProps = {
 	isOpen: false,
 	title: 'Confirm your action',
 	content: 'Are you sure you want to proceed?',
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	primaryButtonProps: { text: 'Confirm', onClick: () => {} },
 	secondaryButtonProps: { text: 'Cancel' }
 };

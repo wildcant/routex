@@ -25,7 +25,7 @@
       }).addTo(map);
 
       // Initialise the FeatureGroup to store editable layers
-      var editableLayers = new L.FeatureGroup();
+      let editableLayers = new L.FeatureGroup();
       map.addLayer(editableLayers);
 
       const poleIcon = L.icon({
@@ -75,7 +75,7 @@
       var drawControl = new L.Control.Draw(options);
       map.addControl(drawControl);
 
-      var editableLayers = new L.FeatureGroup().addTo(map);
+      editableLayers = new L.FeatureGroup().addTo(map);
 
       map.on('draw:created', function (e) {
         // console.log('draw:created');
