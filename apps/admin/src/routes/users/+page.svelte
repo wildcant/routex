@@ -5,7 +5,7 @@
 	import toast from 'svelte-french-toast';
 
 	export let data: PageData;
-	const openConfirmDeleteUserModal = (userId: number) =>
+	const openConfirmDeleteUserModal = (userId: string) =>
 		openModal({
 			content: 'Are you sure you want to delete this user?',
 			primaryButtonProps: {

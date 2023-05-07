@@ -32,7 +32,7 @@
     "build": "tsup",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:migrate:dev": "prisma migrate dev",
-    "db:push": "prisma db push",
+    "db:push": "prisma db push --force-reset",
     "db:seed": "tsx src/seed.ts",
     "dev": "tsup --watch",
     "format": "prisma format",
@@ -44,10 +44,12 @@
   },
   "dependencies": {
     "@prisma/client": "^4.13.0",
-    "bcrypt": "^5.1.0"
+    "bcrypt": "^5.1.0",
+    "md5": "^2.3.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/md5": "^2.3.2",
     "@types/node": "^17.0.12",
     "config": "workspace:*",
     "eslint": "^8.12.0",

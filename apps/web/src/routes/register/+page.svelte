@@ -13,7 +13,7 @@
   $: showGlobalError = unhandledErrors?.length > 0;
 </script>
 
-<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+<section class="flex h-full min-h-screen flex-col justify-center px-6 py-12 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
     <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
       Sign Up
@@ -87,4 +87,4 @@
       <a href="/login">Login</a>
     </div>
   </div>
-</div>
+</section>

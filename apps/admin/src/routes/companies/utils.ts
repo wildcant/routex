@@ -1,10 +1,7 @@
-import { Prisma } from '$lib/prisma';
+import { Prisma } from '$lib/server/prisma';
 import type { Validation } from 'sveltekit-superforms';
 import { setError } from 'sveltekit-superforms/server';
 import type { CompanySchema } from './schema';
-
-export const encode = (str: string) => Buffer.from(str).toString('base64');
-// const decode = (code: string) => Buffer.from(code, 'base64').toString();
 
 type HandleSaveCompanyErrorArgs = {
 	error: unknown;
@@ -14,6 +11,6 @@ export const handleSaveCompanyError = async ({ error, form }: HandleSaveCompanyE
 	if (error instanceof Prisma.PrismaClientKnownRequestError) {
 		return setError(form, null, error.message);
 	}
-
+	console.error(error);
 	return setError(form, null, 'Something went wrong');
 };

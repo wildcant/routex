@@ -24,17 +24,19 @@ importers:
       config: workspace:*
       database: workspace:*
       eslint: ^8.28.0
+      jose: ^4.14.4
       lodash: ^4.17.21
       svelte: ^3.54.0
       svelte-check: ^3.0.1
       svelte-french-toast: 1.0.4-beta.0
-      sveltekit-superforms: ^0.8.4
+      sveltekit-superforms: ^0.8.6
       tslib: ^2.4.1
       typescript: ^5.0.0
       vite: ^4.3.0
       zod: ^3.21.4
     dependencies:
       bcrypt: 5.1.0
+      jose: 4.14.4
       lodash: 4.17.21
       svelte-french-toast: 1.0.4-beta.0_svelte@3.58.0
       zod: 3.21.4
@@ -48,7 +50,7 @@ importers:
       eslint: 8.39.0
       svelte: 3.58.0
       svelte-check: 3.2.0_svelte@3.58.0
-      sveltekit-superforms: 0.8.4_msdxvmhztqf6qp6yxoa5b3dcam
+      sveltekit-superforms: 0.8.6_msdxvmhztqf6qp6yxoa5b3dcam
       tslib: 2.5.0
       typescript: 5.0.4
       vite: 4.3.3
@@ -70,6 +72,7 @@ importers:
       config: workspace:*
       database: workspace:*
       eslint: ^8.28.0
+      jose: ^4.14.4
       leaflet: ^1.9.3
       leaflet-draw: ^1.0.4
       lodash: ^4.17.21
@@ -78,7 +81,7 @@ importers:
       svelte: ^3.54.0
       svelte-check: ^3.0.1
       svelte-preprocess: ^5.0.3
-      sveltekit-superforms: ^0.8.4
+      sveltekit-superforms: ^0.8.6
       tailwindcss: ^3.1.5
       tslib: ^2.4.1
       typescript: ^5.0.0
@@ -87,10 +90,11 @@ importers:
     dependencies:
       bcrypt: 5.1.0
       classnames: 2.3.2
+      jose: 4.14.4
       leaflet: 1.9.3
       leaflet-draw: 1.0.4
       lodash: 4.17.21
-      sveltekit-superforms: 0.8.4_msdxvmhztqf6qp6yxoa5b3dcam
+      sveltekit-superforms: 0.8.6_msdxvmhztqf6qp6yxoa5b3dcam
       zod: 3.21.4
     devDependencies:
       '@skeletonlabs/skeleton': 1.2.5
@@ -139,10 +143,12 @@ importers:
     specifiers:
       '@prisma/client': ^4.13.0
       '@types/bcrypt': ^5.0.0
+      '@types/md5': ^2.3.2
       '@types/node': ^17.0.12
       bcrypt: ^5.1.0
       config: workspace:*
       eslint: ^8.12.0
+      md5: ^2.3.0
       prisma: ^4.13.0
       rimraf: ^3.0.2
       tsconfig: workspace:*
@@ -152,8 +158,10 @@ importers:
     dependencies:
       '@prisma/client': 4.13.0_prisma@4.13.0
       bcrypt: 5.1.0
+      md5: 2.3.0
     devDependencies:
       '@types/bcrypt': 5.0.0
+      '@types/md5': 2.3.2
       '@types/node': 17.0.45
       config: link:../config
       eslint: 8.39.0
@@ -638,6 +646,10 @@ packages:
     resolution: {integrity: sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==}
     dev: true
 
+  /@types/md5/2.3.2:
+    resolution: {integrity: sha512-v+JFDu96+UYJ3/UWzB0mEglIS//MZXgRaJ4ubUPwOM0gvLc/kcQ3TWNYwENEK7/EcXGQVrW8h/XqednSjBd/Og==}
+    dev: true
+
   /@types/node/17.0.45:
     resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
     dev: true
@@ -966,6 +978,10 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
+  /charenc/0.0.2:
+    resolution: {integrity: sha512-yrLQ/yVUFXkzg7EDQsPieE/53+0RlaWTs+wBrvW36cyilJ2SaDWfl4Yj7MtLTXleV9uEKefbAGUPv2/iWSooRA==}
+    dev: false
+
   /chokidar/3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
@@ -1027,6 +1043,10 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  /crypt/0.0.2:
+    resolution: {integrity: sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==}
+    dev: false
 
   /cssesc/3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
@@ -1747,6 +1767,10 @@ packages:
       binary-extensions: 2.2.0
     dev: true
 
+  /is-buffer/1.1.6:
+    resolution: {integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==}
+    dev: false
+
   /is-core-module/2.12.0:
     resolution: {integrity: sha512-RECHCBCd/viahWmwj6enj19sKbHfJrddi/6cBDsNTKbNq0f7VeaUkBo60BqzvPqo/W54ChS62Z5qyun7cfOMqQ==}
     dependencies:
@@ -1788,6 +1812,10 @@ packages:
     resolution: {integrity: sha512-QAdOptna2NYiSSpv0O/BwoHBSmz4YhpzJHyi+fnMRTXFjp7B8i/YG5Z8IfusxB1ufjcD2Sre1F3R+nX3fvy7gg==}
     hasBin: true
     dev: true
+
+  /jose/4.14.4:
+    resolution: {integrity: sha512-j8GhLiKmUAh+dsFXlX1aJCbt5KMibuKb+d7j1JaOJG6s2UjX1PQlW+OKB/sD4a/5ZYF4RcmYmLSndOoU3Lt/3g==}
+    dev: false
 
   /joycon/3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
@@ -1895,6 +1923,14 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       semver: 6.3.0
+    dev: false
+
+  /md5/2.3.0:
+    resolution: {integrity: sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==}
+    dependencies:
+      charenc: 0.0.2
+      crypt: 0.0.2
+      is-buffer: 1.1.6
     dev: false
 
   /merge-stream/2.0.0:
@@ -2742,8 +2778,8 @@ packages:
     resolution: {integrity: sha512-brIBNNB76mXFmU/Kerm4wFnkskBbluBDCjx/8TcpYRb298Yh2dztS2kQ6bhtjMcvUhd5ynClfwpz5h2gnzdQ1A==}
     engines: {node: '>= 8'}
 
-  /sveltekit-superforms/0.8.4_msdxvmhztqf6qp6yxoa5b3dcam:
-    resolution: {integrity: sha512-nmxIzo7FMh7YmImHbPj4NZc97WSqOuaQyI9ec/xCfx89yjKulC4JmhfX0po5LIIlyIpzGF8KH7oF/swXLFDIqA==}
+  /sveltekit-superforms/0.8.6_msdxvmhztqf6qp6yxoa5b3dcam:
+    resolution: {integrity: sha512-pX4nwr+xGcT/NC0IHiIQ1TFgCEWAKrX5ODq3SMVYaUayz+QikPnEOOOvhsR2+NwI1z+Khz5lVHpcx6ZG/tkuQQ==}
     peerDependencies:
       '@sveltejs/kit': 1.x
       svelte: 3.x

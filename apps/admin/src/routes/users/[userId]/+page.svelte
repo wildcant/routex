@@ -13,5 +13,5 @@
 		<h1>Edit User</h1>
 	</header>
 
-	<UserForm data={data.form} submitLabel="Update" />
+	<UserForm data={data.form} submitLabel="Update" companies={data.companies} />
 </article>

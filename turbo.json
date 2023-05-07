@@ -18,6 +18,7 @@
     "generate": {
       "dependsOn": ["^generate"]
     },
-    "lint": {}
+    "lint": {},
+    "preview": {}
   }
 }

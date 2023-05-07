@@ -1,13 +1,16 @@
 <script lang="ts">
+	import { Role, Status, type Company } from 'database/client';
 	import type { Validation } from 'sveltekit-superforms';
 	import { superForm } from 'sveltekit-superforms/client';
-	import { userSchema, type UserSchema } from './schema';
 	import { globalErrorMessage } from '../../stores';
-	import { Role, Status } from 'database/client';
+	import { userSchema, type UserSchema } from './schema';
 
 	export let data: Validation<UserSchema>;
-
 	export let submitLabel: string;
+
+	type CompanyOption = Pick<Company, 'id' | 'name'>;
+	export let companies: CompanyOption[];
+
 	const { form, errors, enhance, allErrors, submitting } = superForm(data, {
 		validators: userSchema
 	});
@@ -57,6 +60,32 @@
 			Pending
 		</label>
 	</fieldset>
+
+	<label for="company" aria-required="true">Company</label>
+	<select
+		id="company"
+		name="companyId"
+		bind:value={$form.companyId}
+		aria-invalid={$errors.companyId ? 'true' : null}
+		disabled={companies.length === 0}
+	>
+		{#each companies as company}
+			<option value={company.id}>
+				{company.name}
+			</option>
+		{/each}
+	</select>
+	{#if $errors.companyId}
+		{#if companies.length === 0}
+			<small class="text-red">
+				Looks like there are no companies.
+				<br />
+				You need to add a company before creating a new user.
+			</small>
+		{:else}
+			<small class="text-red">{$errors.companyId}</small>
+		{/if}
+	{/if}
 
 	<label for="name" aria-required="true">Name</label>
 	<input

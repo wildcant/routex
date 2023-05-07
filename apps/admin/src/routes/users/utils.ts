@@ -1,4 +1,4 @@
-import { Prisma, prisma } from '$lib/prisma';
+import { Prisma, prisma } from '$lib/server/prisma';
 import type { Validation } from 'sveltekit-superforms';
 import { setError } from 'sveltekit-superforms/server';
 import type { UserSchema } from './schema';

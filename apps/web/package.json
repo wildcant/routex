@@ -39,10 +39,11 @@
   "dependencies": {
     "bcrypt": "^5.1.0",
     "classnames": "^2.3.2",
+    "jose": "^4.14.4",
     "leaflet": "^1.9.3",
     "leaflet-draw": "^1.0.4",
     "lodash": "^4.17.21",
-    "sveltekit-superforms": "^0.8.4",
+    "sveltekit-superforms": "^0.8.6",
     "zod": "^3.21.4"
   }
 }

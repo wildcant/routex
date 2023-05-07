@@ -1,8 +1,8 @@
-import { prisma } from '$lib/prisma';
+import { generateHashFor, prisma } from '$lib/server/prisma';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { companySchema } from '../schema';
-import { encode, handleSaveCompanyError } from '../utils';
+import { handleSaveCompanyError } from '../utils';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
@@ -15,7 +15,7 @@ export const actions: Actions = {
 		const form = await superValidate(request, companySchema);
 		if (!form.valid) return fail(400, { form });
 		try {
-			const hash = encode(form.data.name);
+			const hash = generateHashFor(form.data.name);
 			await prisma.company.create({ data: { ...form.data, hash } });
 		} catch (error) {
 			return handleSaveCompanyError({ error, form });

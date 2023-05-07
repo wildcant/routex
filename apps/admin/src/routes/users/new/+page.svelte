@@ -13,5 +13,5 @@
 		<h1>New User</h1>
 	</header>
 
-	<UserForm data={data.form} submitLabel="Create" />
+	<UserForm data={data.form} submitLabel="Create" companies={data.companies} />
 </article>

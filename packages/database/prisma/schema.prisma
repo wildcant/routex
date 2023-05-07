@@ -20,16 +20,19 @@ enum Status {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  name     String
-  role     Role   @default(USER)
-  password String
-  status   Status @default(PENDING)
+  id        String  @id @default(dbgenerated("nanoid()")) @db.VarChar(11)
+  email     String  @unique
+  name      String
+  role      Role    @default(USER)
+  password  String
+  status    Status  @default(PENDING)
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String  @db.VarChar(11)
 }
 
 model Company {
-  id   Int    @id @default(autoincrement())
+  id   String @id @default(dbgenerated("nanoid()")) @db.VarChar(11)
   name String @unique
   hash String @unique
+  User User[]
 }
