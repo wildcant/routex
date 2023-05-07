@@ -141,7 +141,7 @@ importers:
 
   packages/database:
     specifiers:
-      '@prisma/client': ^4.13.0
+      '@prisma/client': 4.13.0
       '@types/bcrypt': ^5.0.0
       '@types/md5': ^2.3.2
       '@types/node': ^17.0.12

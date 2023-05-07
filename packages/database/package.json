@@ -43,7 +43,7 @@
     "studio": "prisma studio"
   },
   "dependencies": {
-    "@prisma/client": "^4.13.0",
+    "@prisma/client": "4.13.0",
     "bcrypt": "^5.1.0",
     "md5": "^2.3.0"
   },

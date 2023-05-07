@@ -1,4 +1,4 @@
-import { fetchCompaniesNames } from '$lib/server/companies';
+import { fetchCompaniesNames } from '$lib/server/company';
 import { prisma } from '$lib/server/prisma';
 import { error, fail, redirect } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
