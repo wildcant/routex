@@ -68,6 +68,61 @@
 
         drawnItems.addLayer(layer);
       });
+
+      /*
+      // Custom plugin
+      L.CustomDraw = {};
+
+      L.CustomDraw.Feature = L.Handler.extend({
+        initialize: console.log,
+        addHooks: console.log
+      });
+
+      L.CustomDraw.Marker = L.CustomDraw.Feature.extend({
+        marker: undefined,
+
+        initialize() {
+          console.log('initialize marker');
+          this.marker = L.marker([11.195326, -74.222521]);
+        },
+        addHooks() {
+          console.log('marker add hooks');
+        }
+      });
+
+      L.CustomToolbar = L.Class.extend({
+        marker: undefined,
+        initialize(...args) {
+          this.marker = new L.CustomDraw.Marker({});
+          this.marker.enable();
+        },
+        createToolbar() {
+          const button = L.DomUtil.create('button');
+          button.innerText = 'Click here';
+          return button;
+        }
+      });
+      */
+
+      /*
+      const poleIcon = L.icon({
+        iconUrl: assets.icons.pole.url,
+        iconSize: assets.icons.pole.size
+      });
+      L.marker([11.23049, -74.20914], { icon: poleIcon }).addTo(map);
+
+      const marker = L.marker([11.231896988705872, -74.21151995658876], {
+        icon: poleIcon,
+        draggable: true
+      }).addTo(map);
+
+      marker.on('dragend', () => {
+        const position = marker.getLatLng();
+        marker.setLatLng(new L.LatLng(position.lat, position.lng));
+        marker.bindPopup(`<pre>${JSON.stringify(position, null, 2)}</pre>`).openPopup();
+        map.panTo(new L.LatLng(position.lat, position.lng));
+      });
+    */
     }
   });
 
