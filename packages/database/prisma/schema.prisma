@@ -3,10 +3,10 @@ generator client {
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
-  directUrl         = env("DIRECT_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // directUrl         = env("DIRECT_URL")
+  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 enum Role {
@@ -35,4 +35,10 @@ model Company {
   name String @unique
   hash String @unique
   User User[]
+}
+
+model TransmissionLine {
+  id      String @id @default(dbgenerated("nanoid()")) @db.VarChar(11)
+  geojson Json
+  color   String
 }

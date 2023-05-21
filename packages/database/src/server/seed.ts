@@ -1,21 +1,105 @@
 import bcrypt from 'bcrypt';
-import { prisma } from '.';
+import { generateHashFor, prisma } from '.';
 
-import type { User } from '@prisma/client';
+import { Prisma, Role, Status } from '@prisma/client';
 
-const DEFAULT_USERS = [
-  // Add your own user to pre-populate the database with
+const DEFAULT_USERS: Prisma.UserCreateInput[] = [
   {
-    name: 'Tim Apple',
-    email: 'tim@apple.com',
-    password: bcrypt.hashSync('12345', 10)
+    name: 'Joe Doe',
+    email: 'joe@mail.com',
+    role: Role.USER,
+    password: bcrypt.hashSync('12345', 10),
+    status: Status.ACTIVE,
+    company: {
+      connectOrCreate: {
+        where: { name: 'Tigo' },
+        create: {
+          name: 'Tigo',
+          hash: generateHashFor('Tigo')
+        }
+      }
+    }
   }
-] as Array<User>;
+];
+
+export const DEFAULT_TRANSMISSION_LINES: Prisma.TransmissionLineCreateInput[] = [
+  {
+    geojson: {
+      type: 'FeatureCollection',
+      features: [
+        {
+          id: 1,
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: [
+              [-74.219009, 11.194263],
+              [-74.219052, 11.194895]
+            ]
+          }
+        },
+        {
+          id: 2,
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [-74.219052, 11.194895]
+          }
+        },
+        {
+          id: 3,
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: [
+              [-74.219052, 11.194895],
+              [-74.21859, 11.19501]
+            ]
+          }
+        },
+        {
+          id: 4,
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [-74.21859, 11.19501]
+          }
+        },
+        {
+          id: 5,
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: [
+              [-74.21859, 11.19501],
+              [-74.217936, 11.195052]
+            ]
+          }
+        },
+        {
+          id: 6,
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [-74.217936, 11.195052]
+          }
+        }
+      ]
+    },
+    color: '#2EC1B8'
+  }
+];
 
 (async () => {
   try {
-    await Promise.all(
-      DEFAULT_USERS.map((user) =>
+    await Promise.all([
+      ...DEFAULT_USERS.map((user) =>
         prisma.user.upsert({
           where: {
             email: user.email
@@ -27,8 +111,11 @@ const DEFAULT_USERS = [
             ...user
           }
         })
+      ),
+      ...DEFAULT_TRANSMISSION_LINES.map((transmissionLine) =>
+        prisma.transmissionLine.create({ data: transmissionLine })
       )
-    );
+    ]);
   } catch (error) {
     console.error(error);
     process.exit(1);

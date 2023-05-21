@@ -1,10 +1,42 @@
 import type { LatLngExpression, PointExpression } from 'leaflet';
-import type { FeatureCollection } from 'geojson';
+import type { TransmissionLine } from './types';
+
+export function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+const poleIconUrl = (color: string) => `
+<svg
+  fill="#000000"
+  version="1.1"
+  id="Capa_1"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="800px"
+  height="800px"
+  viewBox="0 0 29.334 29.334"
+  xml:space="preserve"
+  >
+  <g>
+    <path
+      fill="${color}"
+      d="M14.666,0C6.578,0,0,6.58,0,14.667s6.578,14.667,14.666,14.667s14.668-6.58,14.668-14.667S22.754,0,14.666,0z
+  M14.666,25.334C8.784,25.334,4,20.549,4,14.667S8.784,4,14.666,4c5.883,0,10.668,4.785,10.668,10.667S20.547,25.334,14.666,25.334
+  z M19.332,14.667c0,2.577-2.089,4.667-4.666,4.667c-2.576,0-4.666-2.089-4.666-4.667C10,12.09,12.09,10,14.666,10
+  C17.243,10,19.332,12.09,19.332,14.667z"
+    />
+  </g>
+</svg>
+`;
 
 export const assets = {
   icons: {
     pole: {
-      url: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBVcGxvYWRlZCB0bzogU1ZHIFJlcG8sIHd3dy5zdmdyZXBvLmNvbSwgR2VuZXJhdG9yOiBTVkcgUmVwbyBNaXhlciBUb29scyAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIGZpbGw9IiMwMDAwMDAiIHZlcnNpb249IjEuMSIgaWQ9IkNhcGFfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgDQoJIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI5LjMzNCAyOS4zMzQiDQoJIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPHBhdGggZD0iTTE0LjY2NiwwQzYuNTc4LDAsMCw2LjU4LDAsMTQuNjY3czYuNTc4LDE0LjY2NywxNC42NjYsMTQuNjY3czE0LjY2OC02LjU4LDE0LjY2OC0xNC42NjdTMjIuNzU0LDAsMTQuNjY2LDB6DQoJCSBNMTQuNjY2LDI1LjMzNEM4Ljc4NCwyNS4zMzQsNCwyMC41NDksNCwxNC42NjdTOC43ODQsNCwxNC42NjYsNGM1Ljg4MywwLDEwLjY2OCw0Ljc4NSwxMC42NjgsMTAuNjY3UzIwLjU0NywyNS4zMzQsMTQuNjY2LDI1LjMzNA0KCQl6IE0xOS4zMzIsMTQuNjY3YzAsMi41NzctMi4wODksNC42NjctNC42NjYsNC42NjdjLTIuNTc2LDAtNC42NjYtMi4wODktNC42NjYtNC42NjdDMTAsMTIuMDksMTIuMDksMTAsMTQuNjY2LDEwDQoJCUMxNy4yNDMsMTAsMTkuMzMyLDEyLjA5LDE5LjMzMiwxNC42Njd6Ii8+DQo8L2c+DQo8L3N2Zz4=',
+      url: (color: string) => `data:image/svg+xml;base64,${window.btoa(poleIconUrl(color))}`,
       size: [16, 16] as PointExpression
     }
   }
@@ -40,29 +72,105 @@ export const config = {
   }
 };
 
-export const sampleLines: FeatureCollection[] = [
+export const sampleTransmissionLines: TransmissionLine[] = [
   {
-    type: 'FeatureCollection',
-    features: [
-      {
-        type: 'Feature',
-        properties: {
-          color: 'black'
+    id: '1',
+    geojson: {
+      type: 'FeatureCollection',
+      features: [
+        {
+          id: 1,
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: [
+              [-74.219009, 11.194263],
+              [-74.219052, 11.194895]
+            ]
+          }
         },
-        geometry: {
-          coordinates: [
-            [-74.22328611489122, 11.19293010016898],
-            [-74.22239697488763, 11.193026345976548],
-            [-74.22243376688716, 11.193483513125045],
-            [-74.22185122688508, 11.193531635940474],
-            [-74.22203518688602, 11.194548228553344],
-            [-74.22144733167724, 11.194587808797351],
-            [-74.22147799167739, 11.195261524919488],
-            [-74.22001244367107, 11.195399877143117]
-          ],
-          type: 'LineString'
+        {
+          id: 2,
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [-74.219052, 11.194895]
+          }
+        },
+        {
+          id: 3,
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: [
+              [-74.219052, 11.194895],
+              [-74.21859, 11.19501]
+            ]
+          }
+        },
+        {
+          id: 4,
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [-74.21859, 11.19501]
+          }
+        },
+        {
+          id: 5,
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: [
+              [-74.21859, 11.19501],
+              [-74.217936, 11.195052]
+            ]
+          }
+        },
+        {
+          id: 6,
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [-74.217936, 11.195052]
+          }
         }
-      }
-    ]
+      ]
+    },
+    color: '#2EC1B8'
+  },
+  {
+    id: '2',
+    geojson: {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          properties: {
+            color: '#5EEC92'
+          },
+          geometry: {
+            coordinates: [
+              [-74.22328611489122, 11.19293010016898],
+              [-74.22239697488763, 11.193026345976548],
+              [-74.22243376688716, 11.193483513125045],
+              [-74.22185122688508, 11.193531635940474],
+              [-74.22203518688602, 11.194548228553344],
+              [-74.22144733167724, 11.194587808797351],
+              [-74.22147799167739, 11.195261524919488],
+              [-74.22001244367107, 11.195399877143117]
+            ],
+            type: 'LineString'
+          }
+        }
+      ]
+    },
+    color: '#5EEC92'
   }
 ];
