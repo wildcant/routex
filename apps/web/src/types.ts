@@ -10,7 +10,8 @@ export const sanitizedUser = z.object({
   id: z.string(),
   name: z.string(),
   email: z.string().email(),
-  role: z.nativeEnum(Role)
+  role: z.nativeEnum(Role),
+  companyId: z.string()
 });
 
 export type SanitizedUser = z.infer<typeof sanitizedUser>;

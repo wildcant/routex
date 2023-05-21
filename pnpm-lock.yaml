@@ -12,7 +12,7 @@ importers:
       prettier: 2.8.8
       prettier-plugin-svelte: 2.10.0_f6pmxuoopicxy7gb3t3nvoipzy
       tsx: 3.12.7
-      turbo: 1.9.3
+      turbo: 1.9.8
 
   apps/admin:
     specifiers:
@@ -57,12 +57,14 @@ importers:
 
   apps/web:
     specifiers:
+      '@floating-ui/dom': ^1.2.7
       '@skeletonlabs/skeleton': ^1.2.5
       '@sveltejs/adapter-auto': ^2.0.0
       '@sveltejs/kit': ^1.5.0
       '@tailwindcss/forms': ^0.5.3
       '@tailwindcss/typography': ^0.5.9
       '@types/bcrypt': ^5.0.0
+      '@types/geojson': ^7946.0.10
       '@types/leaflet': ^1.9.3
       '@types/leaflet-draw': ^1.0.6
       '@types/lodash': ^4.14.194
@@ -76,6 +78,7 @@ importers:
       leaflet: ^1.9.3
       leaflet-draw: ^1.0.4
       lodash: ^4.17.21
+      nanoid: ^4.0.2
       postcss: ^8.4.14
       postcss-load-config: ^4.0.1
       svelte: ^3.54.0
@@ -88,12 +91,14 @@ importers:
       vite: ^4.3.0
       zod: ^3.21.4
     dependencies:
+      '@floating-ui/dom': 1.2.7
       bcrypt: 5.1.0
       classnames: 2.3.2
       jose: 4.14.4
       leaflet: 1.9.3
       leaflet-draw: 1.0.4
       lodash: 4.17.21
+      nanoid: 4.0.2
       sveltekit-superforms: 0.8.6_msdxvmhztqf6qp6yxoa5b3dcam
       zod: 3.21.4
     devDependencies:
@@ -103,6 +108,7 @@ importers:
       '@tailwindcss/forms': 0.5.3_tailwindcss@3.3.2
       '@tailwindcss/typography': 0.5.9_tailwindcss@3.3.2
       '@types/bcrypt': 5.0.0
+      '@types/geojson': 7946.0.10
       '@types/leaflet': 1.9.3
       '@types/leaflet-draw': 1.0.6
       '@types/lodash': 4.14.194
@@ -420,6 +426,16 @@ packages:
   /@eslint/js/8.39.0:
     resolution: {integrity: sha512-kf9RB0Fg7NZfap83B3QOqOGg9QmD9yBudqQXzzOtn3i4y7ZUXe5ONeW34Gwi+TxhH4mvj72R1Zc300KUMa9Bng==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  /@floating-ui/core/1.2.6:
+    resolution: {integrity: sha512-EvYTiXet5XqweYGClEmpu3BoxmsQ4hkj3QaYA6qEnigCWffTP3vNRwBReTdrwDwo7OoJ3wM8Uoe9Uk4n+d4hfg==}
+    dev: false
+
+  /@floating-ui/dom/1.2.7:
+    resolution: {integrity: sha512-DyqylONj1ZaBnzj+uBnVfzdjjCkFCL2aA9ESHLyUOGSqb03RpbLMImP1ekIQXYs4KLk9jAjJfZAU8hXfWSahEg==}
+    dependencies:
+      '@floating-ui/core': 1.2.6
+    dev: false
 
   /@humanwhocodes/config-array/0.11.8:
     resolution: {integrity: sha512-UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g==}
@@ -2034,6 +2050,12 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  /nanoid/4.0.2:
+    resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
+
   /natural-compare-lite/1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
     dev: false
@@ -2948,65 +2970,65 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /turbo-darwin-64/1.9.3:
-    resolution: {integrity: sha512-0dFc2cWXl82kRE4Z+QqPHhbEFEpUZho1msHXHWbz5+PqLxn8FY0lEVOHkq5tgKNNEd5KnGyj33gC/bHhpZOk5g==}
+  /turbo-darwin-64/1.9.8:
+    resolution: {integrity: sha512-PkTdBjPfgpj/Dob/6SjkzP0BBP80/KmFjLEocXVEECCLJE6tHKbWLRdvc79B0N6SufdYdZ1uvvoU3KPtBokSPw==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64/1.9.3:
-    resolution: {integrity: sha512-1cYbjqLBA2zYE1nbf/qVnEkrHa4PkJJbLo7hnuMuGM0bPzh4+AnTNe98gELhqI1mkTWBu/XAEeF5u6dgz0jLNA==}
+  /turbo-darwin-arm64/1.9.8:
+    resolution: {integrity: sha512-sLwqOx3XV57QCEoJM9GnDDnnqidG8wf29ytxssBaWHBdeJTjupyrmzTUrX+tyKo3Q+CjWvbPLyqVqxT4g5NuXQ==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64/1.9.3:
-    resolution: {integrity: sha512-UuBPFefawEwpuxh5pM9Jqq3q4C8M0vYxVYlB3qea/nHQ80pxYq7ZcaLGEpb10SGnr3oMUUs1zZvkXWDNKCJb8Q==}
+  /turbo-linux-64/1.9.8:
+    resolution: {integrity: sha512-AMg6VT6sW7aOD1uOs5suxglXfTYz9T0uVyKGKokDweGOYTWmuTMGU5afUT1tYRUwQ+kVPJI+83Atl5Ob0oBsgw==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64/1.9.3:
-    resolution: {integrity: sha512-vUrNGa3hyDtRh9W0MkO+l1dzP8Co2gKnOVmlJQW0hdpOlWlIh22nHNGGlICg+xFa2f9j4PbQlWTsc22c019s8Q==}
+  /turbo-linux-arm64/1.9.8:
+    resolution: {integrity: sha512-tLnxFv+OIklwTjiOZ8XMeEeRDAf150Ry4BCivNwgTVFAqQGEqkFP6KGBy56hb5RRF1frPQpoPGipJNVm7c8m1w==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64/1.9.3:
-    resolution: {integrity: sha512-0BZ7YaHs6r+K4ksqWus1GKK3W45DuDqlmfjm/yuUbTEVc8szmMCs12vugU2Zi5GdrdJSYfoKfEJ/PeegSLIQGQ==}
+  /turbo-windows-64/1.9.8:
+    resolution: {integrity: sha512-r3pCjvXTMR7kq2E3iqwFlN1R7pFO/TOsuUjMhOSPP7HwuuUIinAckU4I9foM3q7ZCQd1XXScBUt3niDyHijAqQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64/1.9.3:
-    resolution: {integrity: sha512-QJUYLSsxdXOsR1TquiOmLdAgtYcQ/RuSRpScGvnZb1hY0oLc7JWU0llkYB81wVtWs469y8H9O0cxbKwCZGR4RQ==}
+  /turbo-windows-arm64/1.9.8:
+    resolution: {integrity: sha512-CWzRbX2TM5IfHBC6uWM659qUOEDC4h0nn16ocG8yIq1IF3uZMzKRBHgGOT5m1BHom+R08V0NcjTmPRoqpiI0dg==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo/1.9.3:
-    resolution: {integrity: sha512-ID7mxmaLUPKG/hVkp+h0VuucB1U99RPCJD9cEuSEOdIPoSIuomcIClEJtKamUsdPLhLCud+BvapBNnhgh58Nzw==}
+  /turbo/1.9.8:
+    resolution: {integrity: sha512-dTouGZBm4a2fE0OPafcTQERCp4i3ZOow0Pr0JlOyxKmzJy0JRwXypH013kbZoK6k1ET5tS/g9rwUXIM/AmWXXQ==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.9.3
-      turbo-darwin-arm64: 1.9.3
-      turbo-linux-64: 1.9.3
-      turbo-linux-arm64: 1.9.3
-      turbo-windows-64: 1.9.3
-      turbo-windows-arm64: 1.9.3
+      turbo-darwin-64: 1.9.8
+      turbo-darwin-arm64: 1.9.8
+      turbo-linux-64: 1.9.8
+      turbo-linux-arm64: 1.9.8
+      turbo-windows-64: 1.9.8
+      turbo-windows-arm64: 1.9.8
     dev: true
 
   /type-check/0.4.0:
