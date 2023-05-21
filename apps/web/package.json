@@ -45,6 +45,7 @@
     "leaflet": "^1.9.3",
     "leaflet-draw": "^1.0.4",
     "lodash": "^4.17.21",
+    "nanoid": "^4.0.2",
     "sveltekit-superforms": "^0.8.6",
     "zod": "^3.21.4"
   }

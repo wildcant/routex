@@ -5,8 +5,9 @@
   import { config, getRandomColor } from './map-config';
   import { addPole } from './map-utils';
   import { initialState, isDrawing, transmissionLines } from './stores';
+  import { nanoid } from 'nanoid';
 
-  const NEW_TRANSMISSION_LINE_ID = 'new-transmission-line';
+  let newTransmissionLineId = nanoid(11);
   let mapContainer: HTMLDivElement;
   let map: L.Map;
   let drawActions: HTMLDivElement;
@@ -69,7 +70,7 @@
         body: JSON.stringify(transmissionLine)
       });
     } else if ($isDrawing.mode === 'new') {
-      const transmissionLine = $transmissionLines.find(({ id }) => id === NEW_TRANSMISSION_LINE_ID);
+      const transmissionLine = $transmissionLines.find(({ id }) => id === newTransmissionLineId);
       if (!transmissionLine)
         throw new Error('TODO: Handle unexpected error. New transmission line not found.');
       fetch(`/api/transmission-line`, {
@@ -85,31 +86,26 @@
   function createTransmissionLine() {
     isDrawing.set({ value: true, mode: 'new' });
     map.once('click', (e) => {
+      newTransmissionLineId = nanoid(11);
+      const firstPole = {
+        id: nanoid(11),
+        lat: e.latlng.lat,
+        lng: e.latlng.lng,
+        transmissionLineId: newTransmissionLineId
+      };
       transmissionLines.update((currentTransmissionLines) =>
         currentTransmissionLines.concat({
-          id: NEW_TRANSMISSION_LINE_ID,
+          id: newTransmissionLineId,
           color: getRandomColor(),
-          geojson: {
-            type: 'FeatureCollection',
-            features: [
-              {
-                id: 1,
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                  type: 'Point',
-                  coordinates: [e.latlng.lng, e.latlng.lat]
-                }
-              }
-            ]
-          }
+          poles: [firstPole],
+          lines: []
         })
       );
-      let previousPolePosition = [e.latlng.lng, e.latlng.lat];
+      let previousPole = firstPole;
       map.addEventListener('click', (e) => {
-        const newPolePosition = [e.latlng.lng, e.latlng.lat];
-        addPole(newPolePosition, previousPolePosition, NEW_TRANSMISSION_LINE_ID);
-        previousPolePosition = newPolePosition;
+        const newPolePosition = e.latlng;
+        const { newPole } = addPole(newPolePosition, previousPole, newTransmissionLineId);
+        previousPole = newPole;
       });
     });
   }
@@ -140,10 +136,6 @@
         alt="pole"
       />
     </button>
-    <!-- <button class="draw-btn" aria-label="Draw LineString (l)" />
-    <button class="draw-btn" aria-label="Draw Polygon (p)" />
-    <button class="draw-btn" aria-label="Draw Rectangular Polygon (r)" />
-    <button class="draw-btn" aria-label="Draw Circular Polygon (c)" /> -->
   </div>
 </div>
 

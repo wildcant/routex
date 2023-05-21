@@ -4,8 +4,10 @@
   import { initialState, transmissionLines } from './stores';
 
   export let data: PageData;
+
   initialState.set({ transmissionLines: data.storedTransmissionLines });
   transmissionLines.set(data.storedTransmissionLines);
+
   let MapContainer: ConstructorOfATypedSvelteComponent;
   onMount(async () => {
     MapContainer = (await import('./MapContainer.svelte')).default;

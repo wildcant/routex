@@ -1,15 +1,20 @@
 <script lang="ts">
-  import type { Position } from 'geojson';
   import L from 'leaflet';
   import { getContext, onDestroy } from 'svelte';
 
-  export let positions: Position[];
+  export let start: { lat: number; lng: number };
+  export let end: { lat: number; lng: number };
   export let color: string;
 
   const map: L.Map = getContext('leafletMapInstance');
-  const latlngs = positions.map((p) => [p[1], p[0]]) as L.LatLngExpression[];
 
-  const line = L.polyline(latlngs, { color }).addTo(map);
+  const line = L.polyline(
+    [
+      [start.lat, start.lng],
+      [end.lat, end.lng]
+    ],
+    { color }
+  ).addTo(map);
 
   onDestroy(() => {
     line.remove();

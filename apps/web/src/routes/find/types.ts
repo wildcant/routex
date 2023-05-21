@@ -1,9 +1,4 @@
-import type { TransmissionLine as DTransmissionLine } from 'database/client';
-import type { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
-import type { Prettify } from '../../types';
+import type { PageData } from './$types';
 
-export type TransmissionLine = Prettify<
-  Omit<DTransmissionLine, 'geojson'> & {
-    geojson: FeatureCollection<Geometry, GeoJsonProperties>;
-  }
->;
+export type ExtendedPole = PageData['storedTransmissionLines'][0]['poles'][0];
+export type ExtendedLine = PageData['storedTransmissionLines'][0]['lines'][0];

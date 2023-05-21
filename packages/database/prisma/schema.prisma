@@ -38,7 +38,28 @@ model Company {
 }
 
 model TransmissionLine {
-  id      String @id @default(dbgenerated("nanoid()")) @db.VarChar(11)
-  geojson Json
-  color   String
+  id    String @id @default(dbgenerated("nanoid()")) @db.VarChar(11)
+  color String
+  poles Pole[]
+  lines Line[]
+}
+
+model Pole {
+  id                 String           @id @default(dbgenerated("nanoid()")) @db.VarChar(11)
+  TransmissionLine   TransmissionLine @relation(fields: [transmissionLineId], references: [id])
+  transmissionLineId String           @db.VarChar(11)
+  lat                Float
+  lng                Float
+  StartLine          Line[]           @relation(name: "start")
+  EndLine            Line[]           @relation(name: "end")
+}
+
+model Line {
+  id                 String           @id @default(dbgenerated("nanoid()")) @db.VarChar(11)
+  start              Pole             @relation(fields: [startPoleId], references: [id], name: "start")
+  end                Pole             @relation(fields: [endPoleId], references: [id], name: "end")
+  TransmissionLine   TransmissionLine @relation(fields: [transmissionLineId], references: [id])
+  transmissionLineId String           @db.VarChar(11)
+  startPoleId        String           @db.VarChar(11)
+  endPoleId          String           @db.VarChar(11)
 }

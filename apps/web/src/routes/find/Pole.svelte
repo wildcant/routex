@@ -4,7 +4,9 @@
   import { assets } from './map-config';
   import { addPole } from './map-utils';
   import { isDrawing } from './stores';
+  import type { ExtendedPole } from './types';
 
+  export let id: string;
   export let transmissionLineId: string;
   export let lat: number;
   export let lng: number;
@@ -26,11 +28,12 @@
   function handleBranchAction() {
     marker.closePopup();
     isDrawing.set({ value: true, mode: 'edit', transmissionLineId });
-    let previousPolePosition = [lng, lat];
+    let previousPole: ExtendedPole = { id, transmissionLineId, lng, lat };
+
     map.addEventListener('click', (e) => {
-      const newPolePosition = [e.latlng.lng, e.latlng.lat];
-      addPole(newPolePosition, previousPolePosition, transmissionLineId);
-      previousPolePosition = newPolePosition;
+      const newPolePosition = e.latlng;
+      const { newPole, newLine } = addPole(newPolePosition, previousPole, transmissionLineId);
+      previousPole = newPole;
     });
   }
 

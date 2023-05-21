@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
-import type { TransmissionLine } from './types';
+
+import type { PageData } from './$types';
 
 type IsDrawing =
   | { value: false }
@@ -9,7 +10,7 @@ type IsDrawing =
 export const isDrawing = writable<IsDrawing>({
   value: false
 });
-export const initialState = writable<{ transmissionLines: TransmissionLine[] }>({
+export const initialState = writable<{ transmissionLines: PageData['storedTransmissionLines'] }>({
   transmissionLines: []
 });
-export const transmissionLines = writable<TransmissionLine[]>([]);
+export const transmissionLines = writable<PageData['storedTransmissionLines']>([]);

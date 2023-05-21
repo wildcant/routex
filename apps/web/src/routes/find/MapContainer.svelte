@@ -7,7 +7,7 @@
 
 <Map>
   <UserMenu />
-  {#each $transmissionLines as transmissionLine (transmissionLine.id)}
-    <TransmissionLine {...transmissionLine} />
+  {#each $transmissionLines as { id, poles, lines, color } (id)}
+    <TransmissionLine {lines} {poles} {color} />
   {/each}
 </Map>

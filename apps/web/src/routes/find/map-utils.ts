@@ -1,40 +1,39 @@
-import type { Feature, LineString, Point, Position } from 'geojson';
+import type L from 'leaflet';
+import { nanoid } from 'nanoid';
 import { transmissionLines } from './stores';
+import type { ExtendedLine, ExtendedPole } from './types';
 
 export function addPole(
-  position: Position,
-  previosPolePosition: Position,
+  position: L.LatLngLiteral,
+  previosPole: ExtendedPole,
   transmissionLineId: string
 ) {
+  const newPole: ExtendedPole = {
+    id: nanoid(11),
+    lat: position.lat,
+    lng: position.lng,
+    transmissionLineId
+  };
+  const newLine: ExtendedLine = {
+    id: nanoid(11),
+    start: previosPole,
+    end: newPole,
+    startPoleId: previosPole.id,
+    endPoleId: newPole.id,
+    transmissionLineId
+  };
+
   transmissionLines.update((currentTransmissionLines) =>
     currentTransmissionLines.map((transmissionLine) => {
       if (transmissionLine.id !== transmissionLineId) return transmissionLine;
-      const features = transmissionLine.geojson.features;
-      const newPole: Feature<Point> = {
-        id: (features[features.length - 1].id as number) + 1,
-        type: 'Feature',
-        properties: {},
-        geometry: {
-          type: 'Point',
-          coordinates: position
-        }
-      };
-      const newLine: Feature<LineString> = {
-        id: (features[features.length - 1].id as number) + 2,
-        type: 'Feature',
-        properties: {},
-        geometry: {
-          type: 'LineString',
-          coordinates: [previosPolePosition, position]
-        }
-      };
+
       return {
         ...transmissionLine,
-        geojson: {
-          ...transmissionLine.geojson,
-          features: [...features, newPole, newLine]
-        }
+        poles: transmissionLine.poles.concat(newPole),
+        lines: transmissionLine.lines.concat(newLine)
       };
     })
   );
+
+  return { newPole, newLine };
 }

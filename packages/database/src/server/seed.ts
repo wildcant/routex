@@ -22,80 +22,6 @@ const DEFAULT_USERS: Prisma.UserCreateInput[] = [
   }
 ];
 
-export const DEFAULT_TRANSMISSION_LINES: Prisma.TransmissionLineCreateInput[] = [
-  {
-    geojson: {
-      type: 'FeatureCollection',
-      features: [
-        {
-          id: 1,
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'LineString',
-            coordinates: [
-              [-74.219009, 11.194263],
-              [-74.219052, 11.194895]
-            ]
-          }
-        },
-        {
-          id: 2,
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'Point',
-            coordinates: [-74.219052, 11.194895]
-          }
-        },
-        {
-          id: 3,
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'LineString',
-            coordinates: [
-              [-74.219052, 11.194895],
-              [-74.21859, 11.19501]
-            ]
-          }
-        },
-        {
-          id: 4,
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'Point',
-            coordinates: [-74.21859, 11.19501]
-          }
-        },
-        {
-          id: 5,
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'LineString',
-            coordinates: [
-              [-74.21859, 11.19501],
-              [-74.217936, 11.195052]
-            ]
-          }
-        },
-        {
-          id: 6,
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'Point',
-            coordinates: [-74.217936, 11.195052]
-          }
-        }
-      ]
-    },
-    color: '#2EC1B8'
-  }
-];
-
 (async () => {
   try {
     await Promise.all([
@@ -111,11 +37,28 @@ export const DEFAULT_TRANSMISSION_LINES: Prisma.TransmissionLineCreateInput[] = 
             ...user
           }
         })
-      ),
-      ...DEFAULT_TRANSMISSION_LINES.map((transmissionLine) =>
-        prisma.transmissionLine.create({ data: transmissionLine })
       )
     ]);
+
+    const transmissionLine = await prisma.transmissionLine.create({
+      data: { color: '#2EC1B8' }
+    });
+
+    const transmissionLineId = transmissionLine.id;
+    const poles = await Promise.all(
+      [
+        { lat: 11.194895, lng: -74.219052, transmissionLineId },
+        { lat: 11.19501, lng: -74.21859, transmissionLineId },
+        { lat: 11.195052, lng: -74.217936, transmissionLineId }
+      ].map((pole) => prisma.pole.create({ data: pole }))
+    );
+
+    await prisma.line.createMany({
+      data: [
+        { transmissionLineId, startPoleId: poles[0].id, endPoleId: poles[1].id },
+        { transmissionLineId, startPoleId: poles[1].id, endPoleId: poles[2].id }
+      ]
+    });
   } catch (error) {
     console.error(error);
     process.exit(1);
