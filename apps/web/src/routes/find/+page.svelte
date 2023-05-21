@@ -1,9 +1,11 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, setContext } from 'svelte';
   import type { PageData } from './$types';
   import { initialState, transmissionLines } from './stores';
 
   export let data: PageData;
+
+  setContext('user', data.user);
 
   initialState.set({ transmissionLines: data.storedTransmissionLines });
   transmissionLines.set(data.storedTransmissionLines);

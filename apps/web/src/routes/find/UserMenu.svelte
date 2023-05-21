@@ -3,11 +3,13 @@
   import { popup, storePopup } from '@skeletonlabs/skeleton';
   import L from 'leaflet';
   import { getContext, onMount } from 'svelte';
+  import type { PageData } from './$types';
 
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
   let userMenu: HTMLDivElement;
   let map: L.Map = getContext('leafletMapInstance');
+  let user: PageData['user'] = getContext('user');
 
   onMount(() => {
     L.Control.UserMenu = L.Control.extend<Pick<L.Control, 'onAdd'>>({ onAdd: () => userMenu });
@@ -33,12 +35,20 @@
     }}
   >
     <figure class="avatar">
+      <!-- TODO: Add user avatar image. -->
+      <!-- 
       <img
         class="avatar-image rounded-full w-16"
         width="200"
         src="https://i.pravatar.cc/?img=48"
         alt="avatar"
-      />
+      /> 
+      -->
+      <div
+        class="avatar-image w-8 h-8 rounded-full bg-slate-600 flex justify-center items-center text-white"
+      >
+        {user?.name.charAt(0)}
+      </div>
     </figure>
   </button>
 

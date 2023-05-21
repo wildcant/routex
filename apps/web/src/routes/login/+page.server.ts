@@ -36,7 +36,7 @@ export const actions: Actions = {
       if (user.status === 'PENDING') return setError(form, null, `You're account is under review.`);
 
       const { expires, token } = await generateUserToken(
-        pick(user, ['id', 'name', 'email', 'role'])
+        pick(user, ['id', 'name', 'email', 'role', 'companyId'])
       );
 
       cookies.set(JWT_COOKIE_KEY, token, {

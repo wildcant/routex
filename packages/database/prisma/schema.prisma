@@ -20,28 +20,43 @@ enum Status {
 }
 
 model User {
-  id        String  @id @default(dbgenerated("nanoid()")) @db.VarChar(11)
-  email     String  @unique
-  name      String
-  role      Role    @default(USER)
-  password  String
-  status    Status  @default(PENDING)
-  company   Company @relation(fields: [companyId], references: [id])
-  companyId String  @db.VarChar(11)
+  id                       String             @id @default(dbgenerated("nanoid()")) @db.VarChar(11)
+  email                    String             @unique
+  name                     String
+  role                     Role               @default(USER)
+  password                 String
+  status                   Status             @default(PENDING)
+  company                  Company            @relation(fields: [companyId], references: [id])
+  companyId                String             @db.VarChar(11)
+  TransmissionLinesCreated TransmissionLine[] @relation(name: "createdByUser")
+  TransmissionLinesUpdated TransmissionLine[] @relation(name: "updatedByUser")
+  createdAt                DateTime           @default(now())
+  updatedAt                DateTime           @updatedAt
 }
 
 model Company {
-  id   String @id @default(dbgenerated("nanoid()")) @db.VarChar(11)
-  name String @unique
-  hash String @unique
-  User User[]
+  id               String             @id @default(dbgenerated("nanoid()")) @db.VarChar(11)
+  name             String             @unique
+  hash             String             @unique
+  User             User[]
+  TransmissionLine TransmissionLine[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
 
 model TransmissionLine {
-  id    String @id @default(dbgenerated("nanoid()")) @db.VarChar(11)
-  color String
-  poles Pole[]
-  lines Line[]
+  id              String   @id @default(dbgenerated("nanoid()")) @db.VarChar(11)
+  color           String
+  poles           Pole[]
+  lines           Line[]
+  owner           Company  @relation(fields: [companyId], references: [id])
+  companyId       String   @db.VarChar(11)
+  createdBy       User     @relation(fields: [createdByUserId], references: [id], name: "createdByUser")
+  createdByUserId String   @db.VarChar(11)
+  updatedBy       User     @relation(fields: [updatedByUserId], references: [id], name: "updatedByUser")
+  updatedByUserId String   @db.VarChar(11)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model Pole {
@@ -52,6 +67,8 @@ model Pole {
   lng                Float
   StartLine          Line[]           @relation(name: "start")
   EndLine            Line[]           @relation(name: "end")
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
 }
 
 model Line {
@@ -62,4 +79,6 @@ model Line {
   transmissionLineId String           @db.VarChar(11)
   startPoleId        String           @db.VarChar(11)
   endPoleId          String           @db.VarChar(11)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
 }

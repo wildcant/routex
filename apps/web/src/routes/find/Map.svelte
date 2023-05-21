@@ -172,9 +172,14 @@
     @apply w-7 h-7 shadow-none border-0 p-1;
   }
 
-  :global(.leaflet-popup-content-wrapper) {
+  :global(.leaflet-tooltip) {
     @apply bg-transparent shadow-none;
   }
+
+  :global(.leaflet-tooltip::before) {
+    @apply hidden;
+  }
+
   :global(.leaflet-popup-tip) {
     @apply hidden;
   }
