@@ -13,3 +13,4 @@ export const initialState = writable<{ transmissionLines: ExtendedTransmissionLi
   transmissionLines: []
 });
 export const transmissionLines = writable<ExtendedTransmissionLine[]>([]);
+export const selectedPoleId = writable<string>();

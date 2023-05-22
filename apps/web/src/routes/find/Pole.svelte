@@ -4,7 +4,7 @@
   import { clickoutside } from '../../actions/clickoutside';
   import { assets } from './map-config';
   import { addPole } from './map-utils';
-  import { isDrawing, transmissionLines } from './stores';
+  import { isDrawing, selectedPoleId, transmissionLines } from './stores';
   import type { ExtendedPole } from './types';
 
   export let id: string;
@@ -25,8 +25,6 @@
     });
 
   const marker = L.marker([lat, lng], { icon: poleIcon(color) }).addTo(map);
-
-  $: marker.setLatLng({ lat, lng });
 
   onMount(() => {
     const tooltip = L.tooltip({ permanent: true, direction: 'top', interactive: true })
@@ -136,9 +134,16 @@
     );
   }
 
+  $: marker.setLatLng({ lat, lng });
+
   // Disable dragging if map is is not in drawing mode.
   $: if (!$isDrawing.value && marker.dragging?.enabled()) {
     marker.dragging.disable();
+  }
+
+  $: if ($selectedPoleId === id) {
+    map.flyTo({ lat, lng }, 20);
+    marker.openPopup(); // TODO: not working for some reason.
   }
 </script>
 

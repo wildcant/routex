@@ -66,7 +66,6 @@ importers:
       '@types/bcrypt': ^5.0.0
       '@types/geojson': ^7946.0.10
       '@types/leaflet': ^1.9.3
-      '@types/leaflet-draw': ^1.0.6
       '@types/lodash': ^4.14.194
       autoprefixer: ^10.4.7
       bcrypt: ^5.1.0
@@ -76,7 +75,6 @@ importers:
       eslint: ^8.28.0
       jose: ^4.14.4
       leaflet: ^1.9.3
-      leaflet-draw: ^1.0.4
       lodash: ^4.17.21
       nanoid: ^4.0.2
       postcss: ^8.4.14
@@ -96,7 +94,6 @@ importers:
       classnames: 2.3.2
       jose: 4.14.4
       leaflet: 1.9.3
-      leaflet-draw: 1.0.4
       lodash: 4.17.21
       nanoid: 4.0.2
       sveltekit-superforms: 0.8.6_msdxvmhztqf6qp6yxoa5b3dcam
@@ -110,7 +107,6 @@ importers:
       '@types/bcrypt': 5.0.0
       '@types/geojson': 7946.0.10
       '@types/leaflet': 1.9.3
-      '@types/leaflet-draw': 1.0.6
       '@types/lodash': 4.14.194
       autoprefixer: 10.4.14_postcss@8.4.23
       config: link:../../packages/config
@@ -140,7 +136,7 @@ importers:
       '@typescript-eslint/parser': 5.59.2_tbtvr3a5zwdiktqy4vlmx63mqq
       eslint: 8.39.0
       eslint-config-prettier: 8.8.0_eslint@8.39.0
-      eslint-config-turbo: 1.9.3_eslint@8.39.0
+      eslint-config-turbo: 1.9.8_eslint@8.39.0
       eslint-plugin-svelte: 2.27.2_eslint@8.39.0
     devDependencies:
       typescript: 4.9.5
@@ -645,12 +641,6 @@ packages:
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: false
-
-  /@types/leaflet-draw/1.0.6:
-    resolution: {integrity: sha512-MetIzhPfUVypp742iRV2Tg/JTnjaloJzBDuMzFglodfYrPaDxNhkm1PueN8KAUmV/aWxvicwHVsfrVc6MCFAWA==}
-    dependencies:
-      '@types/leaflet': 1.9.3
-    dev: true
 
   /@types/leaflet/1.9.3:
     resolution: {integrity: sha512-Caa1lYOgKVqDkDZVWkto2Z5JtVo09spEaUt2S69LiugbBpoqQu92HYFMGUbYezZbnBkyOxMNPXHSgRrRY5UyIA==}
@@ -1393,13 +1383,13 @@ packages:
       eslint: 8.39.0
     dev: false
 
-  /eslint-config-turbo/1.9.3_eslint@8.39.0:
-    resolution: {integrity: sha512-QG6jxFQkrGSpQqlFKefPdtgUfr20EbU0s4tGGIuGFOcPuJEdsY6VYZpZUxNJvmMcTGqPgMyOPjAFBKhy/DPHLA==}
+  /eslint-config-turbo/1.9.8_eslint@8.39.0:
+    resolution: {integrity: sha512-EaZ3EbWXo7bcnwRKZsV+ckcF5Cjdri9wRBXZd5j49E7mJ3EEPvGw70h77kWeeunu+jM3mxxfy8olmo1Udr7gvQ==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
       eslint: 8.39.0
-      eslint-plugin-turbo: 1.9.3_eslint@8.39.0
+      eslint-plugin-turbo: 1.9.8_eslint@8.39.0
     dev: false
 
   /eslint-plugin-svelte/2.27.2_eslint@8.39.0:
@@ -1427,8 +1417,8 @@ packages:
       - ts-node
     dev: false
 
-  /eslint-plugin-turbo/1.9.3_eslint@8.39.0:
-    resolution: {integrity: sha512-ZsRtksdzk3v+z5/I/K4E50E4lfZ7oYmLX395gkrUMBz4/spJlYbr+GC8hP9oVNLj9s5Pvnm9rLv/zoj5PVYaVw==}
+  /eslint-plugin-turbo/1.9.8_eslint@8.39.0:
+    resolution: {integrity: sha512-Alvv3zCkILFfwEJ2aiuUjzYFqZ12qX+2F14ahNOhC9BDwgGZkEh1w19TB2gOPMLeNx2+iBVAU9L+1FTBSOOAJA==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
@@ -1859,10 +1849,6 @@ packages:
 
   /known-css-properties/0.27.0:
     resolution: {integrity: sha512-uMCj6+hZYDoffuvAJjFAPz56E9uoowFHmTkqRtRq5WyC5Q6Cu/fTZKNQpX/RbzChBYLLl3lo8CjFZBAZXq9qFg==}
-    dev: false
-
-  /leaflet-draw/1.0.4:
-    resolution: {integrity: sha512-rsQ6saQO5ST5Aj6XRFylr5zvarWgzWnrg46zQ1MEOEIHsppdC/8hnN8qMoFvACsPvTioAuysya/TVtog15tyAQ==}
     dev: false
 
   /leaflet/1.9.3:
