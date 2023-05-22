@@ -8,9 +8,8 @@ export const PATCH: RequestHandler = async ({ params, request, locals }) => {
 
   const transmissionLine = await prisma.transmissionLine.findUnique({
     where: { id: transmissionLineId },
-    select: { id: true, companyId: true }
+    select: { id: true, companyId: true, poles: true, lines: true }
   });
-
   if (!transmissionLine)
     throw error(404, { message: `Transmission line id ${transmissionLineId} was not found.` });
   if (!locals.user || transmissionLine.companyId !== locals.user?.companyId)
@@ -34,6 +33,10 @@ export const PATCH: RequestHandler = async ({ params, request, locals }) => {
       )
     ]);
 
+    const deletedLines = transmissionLine.lines
+      .filter((line) => !data.lines.find((l) => line.id === l.id))
+      .map((line) => line.id);
+
     await Promise.all([
       ...data.lines.map((line) =>
         tx.line.upsert({
@@ -43,10 +46,20 @@ export const PATCH: RequestHandler = async ({ params, request, locals }) => {
             start: { connect: { id: line.start.id } },
             end: { connect: { id: line.end.id } }
           },
-          update: {}
+          update: {
+            start: { connect: { id: line.start.id } },
+            end: { connect: { id: line.end.id } }
+          }
         })
-      )
+      ),
+      tx.line.deleteMany({ where: { id: { in: deletedLines } } })
     ]);
+
+    const deletedPoles = transmissionLine.poles
+      .filter((pole) => !data.poles.find((p) => pole.id === p.id))
+      .map((pole) => pole.id);
+
+    await tx.pole.deleteMany({ where: { id: { in: deletedPoles } } });
   });
 
   return new Response(JSON.stringify({ success: true }));

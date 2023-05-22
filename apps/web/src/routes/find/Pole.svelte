@@ -4,7 +4,7 @@
   import { clickoutside } from '../../actions/clickoutside';
   import { assets } from './map-config';
   import { addPole } from './map-utils';
-  import { isDrawing } from './stores';
+  import { isDrawing, transmissionLines } from './stores';
   import type { ExtendedPole } from './types';
 
   export let id: string;
@@ -15,7 +15,6 @@
 
   let map: L.Map = getContext('leafletMapInstance');
   let poleActions: HTMLDivElement;
-  let branchAction: HTMLButtonElement;
   let poleData: HTMLDivElement;
 
   const poleIcon = (color: string) =>
@@ -27,20 +26,7 @@
 
   const marker = L.marker([lat, lng], { icon: poleIcon(color) }).addTo(map);
 
-  function handleBranchAction(e: MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-    marker.closePopup();
-    marker.closeTooltip();
-    isDrawing.set({ value: true, mode: 'edit', transmissionLineId });
-    let previousPole: ExtendedPole = { id, transmissionLineId, lng, lat };
-
-    map.addEventListener('click', (e) => {
-      const newPolePosition = e.latlng;
-      const { newPole } = addPole(newPolePosition, previousPole, transmissionLineId);
-      previousPole = newPole;
-    });
-  }
+  $: marker.setLatLng({ lat, lng });
 
   onMount(() => {
     const tooltip = L.tooltip({ permanent: true, direction: 'top', interactive: true })
@@ -53,10 +39,9 @@
     marker.bindPopup(popup).closePopup();
 
     marker.addEventListener('contextmenu', () => {
-      // Allow adding only one branch at a time.
+      // Allow editing only if the map is not in drawing mode already.
       if (!$isDrawing.value) {
         marker.openTooltip();
-        branchAction.addEventListener('click', handleBranchAction, { once: true });
       }
     });
   });
@@ -64,6 +49,97 @@
   onDestroy(() => {
     marker.remove();
   });
+
+  function handleBranchAction() {
+    marker.closeTooltip();
+    isDrawing.set({ value: true, mode: 'edit', transmissionLineId });
+    let previousPole: ExtendedPole = { id, transmissionLineId, lng, lat };
+
+    map.addEventListener('click', (e) => {
+      const newPolePosition = e.latlng;
+      const { newPole } = addPole(newPolePosition, previousPole, transmissionLineId);
+      previousPole = newPole;
+    });
+  }
+
+  function handleMoveAction() {
+    marker.closeTooltip();
+    isDrawing.set({ value: true, mode: 'edit', transmissionLineId });
+    marker.dragging?.enable();
+    marker.on('drag', (e) => {
+      const latlng = (e as unknown as L.LeafletMouseEvent).latlng;
+      transmissionLines.update((currentTransmissionLines) =>
+        currentTransmissionLines.map((transmissionLine) => {
+          if (transmissionLine.id !== transmissionLineId) return transmissionLine;
+          // Update pole position
+          const updatedPole: ExtendedPole = {
+            id,
+            lat: latlng.lat,
+            lng: latlng.lng,
+            transmissionLineId
+          };
+
+          const poles = transmissionLine.poles.map((p) => {
+            if (p.id !== id) return p;
+            return updatedPole;
+          });
+
+          // Update lines that start or end in this node
+          const lines = transmissionLine.lines.map((l) => {
+            if (l.startPoleId === id) return { ...l, start: updatedPole };
+            if (l.endPoleId === id) return { ...l, end: updatedPole };
+            return l;
+          });
+
+          return {
+            ...transmissionLine,
+            poles,
+            lines
+          };
+        })
+      );
+    });
+  }
+
+  function handleDeletePole() {
+    marker.closeTooltip();
+    isDrawing.set({ value: true, mode: 'edit', transmissionLineId });
+    transmissionLines.update((currentTransmissionLines) =>
+      currentTransmissionLines.map((transmissionLine) => {
+        if (transmissionLine.id !== transmissionLineId) return transmissionLine;
+        // remove pole.
+        const poles = transmissionLine.poles.filter((p) => p.id !== id);
+
+        // There can only be on line that ends in a given pole but there can be a lot of lines that start on a given pole.
+        // so we need to find all the lines that starts with the pole that we are deleting and update the start property with the start pole of the line that ends with the current pole.
+        const lineEndPole = transmissionLine.lines.find((l) => l.endPoleId === id);
+        if (!lineEndPole)
+          throw new Error(
+            'TODO: Handle unexpected error, there is no lines that ends on this pole.'
+          );
+
+        const lines = transmissionLine.lines
+          // Remove the line that ends on this pole
+          .filter((l) => l.endPoleId !== id)
+          .map((l) => {
+            if (l.startPoleId !== id) return l;
+            // Update the lines that start on this pole
+            return { ...l, start: lineEndPole.start };
+          });
+
+        return {
+          ...transmissionLine,
+          poles,
+          lines
+        };
+      })
+    );
+  }
+
+  // Disable dragging if map is is not in drawing mode.
+  $: if (!$isDrawing.value && marker.dragging?.enabled()) {
+    marker.dragging.disable();
+  }
 </script>
 
 <div bind:this={poleData}>
@@ -80,6 +156,30 @@
   on:keyup
 >
   <div class="flex flex-col items-center mb-4 space-y-2">
+    <button
+      type="button"
+      data-tooltip-target="tooltip-copy"
+      data-tooltip-placement="left"
+      class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-lg border border-gray-200 dark:border-gray-600 dark:hover:text-white shadow-sm dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400"
+      on:click={handleDeletePole}
+    >
+      <!-- TODO: Add icon that represent deleting a pole. -->
+      <div>delete</div>
+      <span class="sr-only">Delete</span>
+    </button>
+
+    <button
+      type="button"
+      data-tooltip-target="tooltip-copy"
+      data-tooltip-placement="left"
+      class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-lg border border-gray-200 dark:border-gray-600 dark:hover:text-white shadow-sm dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400"
+      on:click={handleMoveAction}
+    >
+      <!-- TODO: Add icon that represent moving a pole. -->
+      <div>move</div>
+      <span class="sr-only">Move</span>
+    </button>
+
     <button
       type="button"
       data-tooltip-target="tooltip-copy"
@@ -103,11 +203,12 @@
       </svg>
       <span class="sr-only">Copy</span>
     </button>
+
     <button
-      bind:this={branchAction}
       type="button"
       data-tooltip-target="tooltip-copy"
       data-tooltip-placement="left"
+      on:click={handleBranchAction}
       class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-lg border border-gray-200 dark:border-gray-600 dark:hover:text-white shadow-sm dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400"
     >
       <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 20 20">
