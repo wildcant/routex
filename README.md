@@ -18,6 +18,6 @@ The main goal is to improve the proceses/logistics of said companies when workin
 
 ## TODOs
 
-[ ] Add subscription service and payment gateway integration.
-[ ] Add transmission lines views in admin portal.
-[ ] Define features for admin user and normal user role for companies in web portal.
+- [ ] Add subscription service and payment gateway integration.
+- [ ] Add transmission lines views in admin portal.
+- [ ] Define features for admin user and normal user role for companies in web portal.
