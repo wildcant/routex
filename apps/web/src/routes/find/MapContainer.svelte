@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Directions from './Directions.svelte';
   import Map from './Map.svelte';
   import Search from './Search.svelte';
   import TransmissionLine from './TransmissionLine.svelte';
@@ -12,4 +13,5 @@
   {#each $transmissionLines as { id, poles, lines, color } (id)}
     <TransmissionLine {lines} {poles} {color} />
   {/each}
+  <Directions />
 </Map>

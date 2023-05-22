@@ -13,4 +13,8 @@ declare module 'leaflet' {
     function draw(options?: ControlOptions): Control.Draw;
     function editDrawActions(options?: ControlOptions): Control.EditDrawActions;
   }
+
+  namespace Polyline {
+    function fromEncoded(encoded: string);
+  }
 }
