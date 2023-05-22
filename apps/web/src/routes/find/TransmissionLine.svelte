@@ -12,6 +12,6 @@
   <Pole {id} {lat} {lng} {transmissionLineId} {color} />
 {/each}
 
-{#each lines as { id, start, end } (id)}
-  <Line {start} {end} {color} />
+{#each lines as { id, start, end, transmissionLineId } (id)}
+  <Line {id} {start} {end} {transmissionLineId} {color} />
 {/each}

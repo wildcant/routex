@@ -173,7 +173,7 @@
   }
 
   :global(.leaflet-tooltip) {
-    @apply bg-transparent shadow-none;
+    @apply bg-transparent shadow-none border-none;
   }
 
   :global(.leaflet-tooltip::before) {
