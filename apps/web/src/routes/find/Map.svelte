@@ -30,18 +30,18 @@
     map.invalidateSize();
 
     // Edit Options
-    L.Control.EditCustomDrawOptions = L.Control.extend<Pick<L.Control, 'onAdd'>>({
+    L.Control.EditDrawActions = L.Control.extend<Pick<L.Control, 'onAdd'>>({
       onAdd: () => drawActions
     });
-    L.control.editCustomDrawOptions = (opts) => new L.Control.EditCustomDrawOptions(opts);
-    L.control.editCustomDrawOptions({ position: 'bottomleft' }).addTo(map);
+    L.control.editDrawActions = (opts) => new L.Control.EditDrawActions(opts);
+    L.control.editDrawActions({ position: 'bottomleft' }).addTo(map);
 
     // Add new transmission line control
-    L.Control.CustomDraw = L.Control.extend<Pick<L.Control, 'onAdd'>>({
+    L.Control.Draw = L.Control.extend<Pick<L.Control, 'onAdd'>>({
       onAdd: () => drawMenu
     });
-    L.control.customDraw = (opts) => new L.Control.CustomDraw(opts);
-    L.control.customDraw({ position: 'bottomright' }).addTo(map);
+    L.control.draw = (opts) => new L.Control.Draw(opts);
+    L.control.draw({ position: 'bottomright' }).addTo(map);
   });
 
   onDestroy(() => {
@@ -120,41 +120,41 @@
 </script>
 
 <div class="map" bind:this={mapContainer}>
+  <!-- Draw Menu -->
+  <div bind:this={drawMenu}>
+    <div class="ctrl shadow-lg bg-white flex flex-col">
+      <button
+        class="draw-btn"
+        aria-label="Draw Point (m)"
+        on:click|stopPropagation={createTransmissionLine}
+      >
+        <img
+          src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBVcGxvYWRlZCB0bzogU1ZHIFJlcG8sIHd3dy5zdmdyZXBvLmNvbSwgR2VuZXJhdG9yOiBTVkcgUmVwbyBNaXhlciBUb29scyAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIGZpbGw9IiMwMDAwMDAiIHZlcnNpb249IjEuMSIgaWQ9IkNhcGFfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgDQoJIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI5LjMzNCAyOS4zMzQiDQoJIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPHBhdGggZD0iTTE0LjY2NiwwQzYuNTc4LDAsMCw2LjU4LDAsMTQuNjY3czYuNTc4LDE0LjY2NywxNC42NjYsMTQuNjY3czE0LjY2OC02LjU4LDE0LjY2OC0xNC42NjdTMjIuNzU0LDAsMTQuNjY2LDB6DQoJCSBNMTQuNjY2LDI1LjMzNEM4Ljc4NCwyNS4zMzQsNCwyMC41NDksNCwxNC42NjdTOC43ODQsNCwxNC42NjYsNGM1Ljg4MywwLDEwLjY2OCw0Ljc4NSwxMC42NjgsMTAuNjY3UzIwLjU0NywyNS4zMzQsMTQuNjY2LDI1LjMzNA0KCQl6IE0xOS4zMzIsMTQuNjY3YzAsMi41NzctMi4wODksNC42NjctNC42NjYsNC42NjdjLTIuNTc2LDAtNC42NjYtMi4wODktNC42NjYtNC42NjdDMTAsMTIuMDksMTIuMDksMTAsMTQuNjY2LDEwDQoJCUMxNy4yNDMsMTAsMTkuMzMyLDEyLjA5LDE5LjMzMiwxNC42Njd6Ii8+DQo8L2c+DQo8L3N2Zz4="
+          alt="pole"
+        />
+      </button>
+    </div>
+  </div>
+
+  <!-- Draw/Edit Actions -->
+  <div bind:this={drawActions}>
+    <div class={cn({ hidden: !$isDrawing.value })}>
+      <button
+        on:click|preventDefault|stopPropagation={handleSaveChanges}
+        class="btn variant-filled-secondary rounded-md"
+      >
+        Save
+      </button>
+      <button
+        on:click|preventDefault|stopPropagation={handleUndoChanges}
+        class="btn variant-ringed-secondary rounded-md bg-white"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+
   <slot />
-</div>
-
-<!-- Draw Menu -->
-<div bind:this={drawMenu}>
-  <div class="ctrl shadow-lg bg-white flex flex-col">
-    <button
-      class="draw-btn"
-      aria-label="Draw Point (m)"
-      on:click|stopPropagation={createTransmissionLine}
-    >
-      <img
-        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBVcGxvYWRlZCB0bzogU1ZHIFJlcG8sIHd3dy5zdmdyZXBvLmNvbSwgR2VuZXJhdG9yOiBTVkcgUmVwbyBNaXhlciBUb29scyAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIGZpbGw9IiMwMDAwMDAiIHZlcnNpb249IjEuMSIgaWQ9IkNhcGFfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgDQoJIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI5LjMzNCAyOS4zMzQiDQoJIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPHBhdGggZD0iTTE0LjY2NiwwQzYuNTc4LDAsMCw2LjU4LDAsMTQuNjY3czYuNTc4LDE0LjY2NywxNC42NjYsMTQuNjY3czE0LjY2OC02LjU4LDE0LjY2OC0xNC42NjdTMjIuNzU0LDAsMTQuNjY2LDB6DQoJCSBNMTQuNjY2LDI1LjMzNEM4Ljc4NCwyNS4zMzQsNCwyMC41NDksNCwxNC42NjdTOC43ODQsNCwxNC42NjYsNGM1Ljg4MywwLDEwLjY2OCw0Ljc4NSwxMC42NjgsMTAuNjY3UzIwLjU0NywyNS4zMzQsMTQuNjY2LDI1LjMzNA0KCQl6IE0xOS4zMzIsMTQuNjY3YzAsMi41NzctMi4wODksNC42NjctNC42NjYsNC42NjdjLTIuNTc2LDAtNC42NjYtMi4wODktNC42NjYtNC42NjdDMTAsMTIuMDksMTIuMDksMTAsMTQuNjY2LDEwDQoJCUMxNy4yNDMsMTAsMTkuMzMyLDEyLjA5LDE5LjMzMiwxNC42Njd6Ii8+DQo8L2c+DQo8L3N2Zz4="
-        alt="pole"
-      />
-    </button>
-  </div>
-</div>
-
-<!-- Draw/Edit Actions -->
-<div bind:this={drawActions}>
-  <div class={cn({ hidden: !$isDrawing.value })}>
-    <button
-      on:click|preventDefault|stopPropagation={handleSaveChanges}
-      class="btn variant-filled-secondary rounded-md"
-    >
-      Save
-    </button>
-    <button
-      on:click|preventDefault|stopPropagation={handleUndoChanges}
-      class="btn variant-ringed-secondary rounded-md bg-white"
-    >
-      Cancel
-    </button>
-  </div>
 </div>
 
 <style>

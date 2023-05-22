@@ -1,11 +1,8 @@
 <script lang="ts">
-  import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-  import { popup, storePopup } from '@skeletonlabs/skeleton';
+  import { popup } from '@skeletonlabs/skeleton';
   import L from 'leaflet';
   import { getContext, onMount } from 'svelte';
   import type { PageData } from './$types';
-
-  storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
   let userMenu: HTMLDivElement;
   let map: L.Map = getContext('leafletMapInstance');
